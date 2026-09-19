@@ -1,5 +1,6 @@
 import pygame
 import math
+import random
 
 pygame.init()
 
@@ -17,7 +18,7 @@ food_y = 450
 clock = pygame.time.Clock()
 
 food_available = True
-energy = 5 
+energy = 100
 
 while running:
     for event in pygame.event.get():
@@ -36,8 +37,9 @@ while running:
     distance = math.hypot(x - food_x, y - food_y)
 
     if food_available and distance <= 15: 
-        food_available = False
         energy += 30
+        food_x = random.randint(5, 995)
+        food_y = random.randint(5, 695)
         print("Food eaten! Energy:", energy)
 
     if energy <= 0:
