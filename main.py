@@ -10,11 +10,15 @@ pygame.display.set_caption("Evolution Simulator")
 
 running = True
 
-food_x = 600
-food_y = 450
-clock = pygame.time.Clock()
+foods = []
 
-food_available = True
+for _ in range(20):
+    foods.append((
+        random.randint(5, 995),
+        random.randint(5, 695),
+    ))
+
+clock = pygame.time.Clock()
 
 creatures = [
     Creature(500, 350),
@@ -31,21 +35,24 @@ while running:
     for creature in creatures:
         creature.update(dt, screen.get_width(), screen.get_height())
 
-        distance = math.hypot(creature.x - food_x, creature.y - food_y)
-   
+        for index, (food_x, food_y) in enumerate(foods):
+            distance = math.hypot(creature.x - food_x, creature.y - food_y)
 
-        if food_available and distance <= creature.radius + 5: 
-            creature.energy += 30
-            food_x = random.randint(5, 995)
-            food_y = random.randint(5, 695)
-            print("Food eaten! Energy:", creature.energy)
+            if distance <= creature.radius + 5:
+                creature.energy += 30
+                foods[index] = (
+                    random.randint(5, 995),
+                    random.randint(5, 695),
+                )
+                break
+
 
 
     creatures = [creature for creature in creatures if creature.energy > 0]
 
     screen.fill("black")
 
-    if food_available:
+    for food_x, food_y in foods:
         pygame.draw.circle(screen, "orange", (food_x, food_y), 5)
 
     for creature in creatures:
