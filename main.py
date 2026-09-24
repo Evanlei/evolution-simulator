@@ -15,7 +15,12 @@ food_y = 450
 clock = pygame.time.Clock()
 
 food_available = True
-creature = Creature(500, 350)
+
+creatures = [
+    Creature(500, 350),
+    Creature(200, 200),
+    Creature(800, 500),
+]
 
 while running:
     dt = clock.tick(60) / 1000
@@ -23,30 +28,33 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    creature.update(dt, screen.get_width(), screen.get_height())
+    for creature in creatures:
+        creature.update(dt, screen.get_width(), screen.get_height())
 
-    distance = math.hypot(creature.x - food_x, creature.y - food_y)
+        distance = math.hypot(creature.x - food_x, creature.y - food_y)
    
 
-    if food_available and distance <= creature.radius + 5: 
-        creature.energy += 30
-        food_x = random.randint(5, 995)
-        food_y = random.randint(5, 695)
-        print("Food eaten! Energy:", creature.energy)
+        if food_available and distance <= creature.radius + 5: 
+            creature.energy += 30
+            food_x = random.randint(5, 995)
+            food_y = random.randint(5, 695)
+            print("Food eaten! Energy:", creature.energy)
 
-    if creature.energy <= 0:
-        print("Creature ran out of energy.")
-        running = False
 
+    creatures = [creature for creature in creatures if creature.energy > 0]
 
     screen.fill("black")
 
     if food_available:
         pygame.draw.circle(screen, "orange", (food_x, food_y), 5)
 
-    creature.draw(screen)
+    for creature in creatures:
+        creature.draw(screen)
 
-    pygame.display.set_caption(f"Evolution Simulator | Energy: {creature.energy:.1f}")
+    pygame.display.set_caption(
+        f"Evolution Simulator | Population: {len(creatures)}"
+    )
+
     pygame.display.flip() # updates the screen
 
     
