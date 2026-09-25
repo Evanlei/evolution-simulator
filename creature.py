@@ -1,5 +1,5 @@
 import pygame
-
+import random
 
 class Creature:
     # Each instance owns its position, velocity, energy, and size.
@@ -34,8 +34,16 @@ class Creature:
         self.energy = self.energy / 2
         offspring = Creature(self.x, self.y)
         offspring.energy = self.energy
-        offspring.velocity_x = -self.velocity_x
-        offspring.velcity_y = -self.velocity_y
+
+        # Inherit the parent's speed with a small random variation.
+        mutation_factor = random.uniform(0.9, 1.1)
+        offspring.velocity_x = mutation_factor * -self.velocity_x
+        offspring.velocity_y = mutation_factor * -self.velocity_y
+
+        print("Mutation factor:", mutation_factor)
+        print("Parent velocity:", self.velocity_x, self.velocity_y)
+        print("Offspring velocity:", offspring.velocity_x, offspring.velocity_y)
+
         return offspring
 
 

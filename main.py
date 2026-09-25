@@ -24,6 +24,7 @@ creatures = [
     Creature(200, 200),
     Creature(800, 500),
 ]
+creatures[0].energy = 170
 
 # Main loop: handle input, update the world, then draw a complete frame.
 running = True
