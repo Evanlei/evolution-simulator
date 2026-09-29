@@ -30,7 +30,10 @@ class Creature:
     def sense(self, target, config):
         self.target = target
         dx, dy = (0, 0) if target is None else (target[0] - self.x, target[1] - self.y)
-        self.inputs = [dx / config.sensor_range, dy / config.sensor_range,
+        # Direction stays informative close to food; range is enforced by the food index.
+        distance = math.hypot(dx, dy)
+        dx, dy = (dx / distance, dy / distance) if distance else (0, 0)
+        self.inputs = [dx, dy,
                        float(target is not None), self.energy / config.max_energy,
                        self.vx / config.max_speed, self.vy / config.max_speed,
                        2 * self.x / config.width - 1, 2 * self.y / config.height - 1]
@@ -81,6 +84,7 @@ class Creature:
     def to_dict(self):
         data = dict(vars(self))
         data["brain"] = list(self.brain.parameters)
+        data["target"] = list(self.target) if self.target is not None else None
         return data
 
     @classmethod

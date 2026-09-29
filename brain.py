@@ -3,7 +3,7 @@
 import math
 import random
 
-INPUT_NAMES = ("food dx", "food dy", "food visible", "energy", "velocity x",
+INPUT_NAMES = ("food direction x", "food direction y", "food visible", "energy", "velocity x",
                "velocity y", "position x", "position y")
 INPUTS, HIDDEN, OUTPUTS = 8, 10, 2
 PARAMETERS = INPUTS * HIDDEN + HIDDEN + HIDDEN * OUTPUTS + OUTPUTS

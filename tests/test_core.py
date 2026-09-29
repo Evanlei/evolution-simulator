@@ -12,6 +12,31 @@ from spatial import FoodIndex
 
 
 class CoreTests(unittest.TestCase):
+    def test_sensors_keep_direction_close_to_food(self):
+        agent = Creature(0, 500, 350, Brain(random.Random(2)))
+        near = agent.sense((503, 354), Config())[:2]
+        far = agent.sense((560, 430), Config())[:2]
+        self.assertEqual(near, far)
+        self.assertEqual(near, [0.6, 0.8])
+        self.assertEqual(agent.sense(None, Config())[:3], [0, 0, 0])
+        self.assertEqual(agent.sense((500, 350), Config())[:3], [0, 0, 1])
+
+    def test_food_replenishes_and_reproduction_cooldown(self):
+        config = Config(initial_population=1, food_count=1, minimum_age=0)
+        world = World(config, 4)
+        parent = world.creatures[0]
+        parent.brain = Brain(parameters=[0.0] * PARAMETERS)
+        parent.energy = 180
+        world.food.replace(0, (parent.x, parent.y))
+        world.step()
+        self.assertEqual(world.meals, 1)
+        self.assertEqual(len(world.food.positions), 1)
+        self.assertEqual(world.births, 1)
+        self.assertEqual(len(world.creatures), 2)
+        parent.energy = 200
+        world.step()
+        self.assertEqual(world.births, 1)
+
     def test_brain_and_mutation(self):
         rng = random.Random(4)
         parent = Brain(rng)

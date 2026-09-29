@@ -144,6 +144,6 @@ class World:
         if not rows or rows[-1] != self.metrics():
             rows.append(self.metrics())
         with path.open("w", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=rows[0].keys())
+            writer = csv.DictWriter(handle, fieldnames=rows[0].keys(), lineterminator="\n")
             writer.writeheader()
             writer.writerows(rows)
