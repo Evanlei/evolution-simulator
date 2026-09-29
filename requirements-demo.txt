@@ -1,0 +1,2 @@
+# Optional: regenerate the README animation. Not needed for the application or tests.
+Pillow==11.3.0

@@ -330,7 +330,7 @@ class Dashboard:
         self.label("No backpropagation. Parameters evolve at birth.", 1070, 870, 13, MUTED)
         notice = self.notice if pygame.time.get_ticks() < self.notice_until else "SPACE pause   TAB speed   R reset   N new seed   D evolved demo   V sensors   T trails   S save   L load   E export"
         self.label(notice, 29, 919, 13, MUTED)
-        self.label(f"{self.clock.get_fps():.0f} FPS", 1355, 919, 13, MUTED)
+        self.label(f"{1 / self.world.config.dt:.0f} Hz physics", 1325, 919, 13, MUTED)
 
     def run(self, frames=None, screenshot=None):
         running, rendered = True, 0
