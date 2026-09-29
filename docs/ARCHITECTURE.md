@@ -110,11 +110,15 @@ case remains linear when food is clustered or the search covers the whole world.
   require a smaller timestep or swept collision detection.
 - A strong single-agent foraging score does not establish stable multi-agent ecology.
 
-## Interview walkthrough
+## Code navigation
 
-Start with the original `sense → think → move → eat → reproduce` loop. Explain why
-each offspring needs its own parameters, why energy splitting matters, and why frame
-rate must not change simulation behavior. Then demonstrate a checkpoint continuation,
-inspect one brain, and distinguish held-out food consumption from shaped training
-fitness. Use the measured benchmark and its limitations rather than implying every
-random ecosystem improves indefinitely.
+- Start with `World.step()` in `simulation.py` to follow one complete physics step.
+- `Creature.sense()` and `Creature.update()` connect observations to neural decisions
+  and movement. `Creature.reproduce()` handles energy splitting and ancestry.
+- `Brain.forward()` performs inference; `Brain.mutated_copy()` creates an independent
+  offspring genome.
+- `World.save()` and `World.load()` serialize and restore simulation and RNG state.
+- `experiments.train()` implements generational selection; `experiments.benchmark()`
+  evaluates the resulting policies on held-out environments.
+- `Dashboard.draw()` renders the world and inspection panels, while
+  `Dashboard.handle_event()` routes mouse and keyboard input.

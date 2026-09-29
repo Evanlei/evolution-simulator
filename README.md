@@ -13,9 +13,11 @@ opening a window.
 
 ## Run the demo
 
-Python **3.9+** is supported. From this repository:
+Requires Python **3.9+** and a desktop display for the interactive dashboard.
 
 ```bash
+git clone https://github.com/Evanlei/evolution-simulator.git
+cd evolution-simulator
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -56,7 +58,7 @@ founders in this capture use the exported evolved policy; descendants mutate at 
 - **Experiments:** elitist/tournament evolutionary training, disjoint training/test
   environments, random-network, random-walk and greedy baselines, raw results and charts.
 - **Performance structure:** a uniform-grid food index and a headless engine separated
-  from rendering. No claim of GPU acceleration or real biological fidelity.
+  from rendering.
 
 ## Controls
 
@@ -162,15 +164,6 @@ the same names in the selected output folder.
 
 ## Tests
 
-Run the native dashboard from a normal desktop terminal. A CI/agent sandbox without
-macOS desktop registration can abort in SDL/Cocoa before application rendering starts.
-Use `--headless` for simulation-only work, or SDL's offscreen driver for render checks:
-
-```bash
-SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy python main.py \
-  --frames 3 --screenshot runs/dashboard.png
-```
-
 ```bash
 python -m unittest discover -s tests -v
 ```
@@ -179,18 +172,26 @@ Tests cover energy conservation, mutation independence, spatial queries against 
 brute-force oracle, population limits, death ordering, sensing, deterministic episodes,
 checkpoint continuation, training elitism, policy round trips, dashboard controls,
 and consistency of the checked-in benchmark evidence. UI tests use SDL's offscreen
-driver. A GitHub Actions workflow is included for Python 3.9 and 3.12; it runs when
-these commits are pushed, and is not represented as already passing remotely.
+driver. The [GitHub Actions workflow](.github/workflows/tests.yml) runs tests and
+command-line smoke checks on Python 3.9 and 3.12 for pushes and pull requests.
 
-## Understand and extend it
+For rendering in environments without desktop access, use SDL's offscreen driver:
 
-Read [the architecture and interview walkthrough](docs/ARCHITECTURE.md) for equations,
-update ordering, design tradeoffs and known limits. [Résumé bullets](docs/RESUME.md)
-use features and measurements implemented in this repository.
+```bash
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy python main.py \
+  --frames 3 --screenshot runs/dashboard.png
+```
 
-This started as a hands-on Python/Pygame learning project and grew into a complete
-simulation and experiment workflow. The original incremental implementation remains
-in Git history; the finishing pass was developed with AI assistance.
+Use `--headless` when no rendering is needed. Native macOS windows require access to
+the desktop session; launch the dashboard from a normal desktop terminal.
+
+## Architecture
+
+The engine, controllers, visualization and experiment runner are separate modules.
+Read [the architecture guide](docs/ARCHITECTURE.md) for the network equations, update
+order, energy model, checkpoint format and known limitations.
+
+## Regenerate demo assets
 
 To regenerate the screenshot and animation (optional Pillow dependency):
 
@@ -200,6 +201,7 @@ python tools/render_demo.py
 python tools/encode_demo.py
 ```
 
-Possible future research: limited-energy food regeneration, obstacles, distance inputs,
-crossovers, larger networks, and repeated ecological trials. They are **future work**,
-not features claimed by this version.
+## Future work
+
+Potential extensions include limited-energy food regeneration, obstacles, distance
+inputs, crossover, larger networks, and repeated ecological trials.
