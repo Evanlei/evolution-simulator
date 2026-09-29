@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "founder_policy": "results/benchmark/champion.json",
+  "simulated_seconds": 300,
+  "initial_population": 36,
+  "food_count": 100,
+  "population_limit": 180,
+  "final_population": 180,
+  "births": 180,
+  "deaths": 36,
+  "meals": 41892,
+  "max_generation": 4,
+  "interpretation": "One smoke test of a population initialized with the offline-evolved policy; not evidence of general ecological stability."
+}

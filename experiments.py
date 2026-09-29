@@ -7,9 +7,7 @@ when describing the results.
 
 import argparse
 import csv
-from dataclasses import replace
 import json
-import math
 from pathlib import Path
 import random
 import statistics
@@ -110,7 +108,7 @@ def benchmark(output, seeds=(11, 22, 33), population=32, generations=24, seconds
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     # These seeds are never used by selection or mutation.
-    holdout = list(range(900_000, 900_000 + test_episodes))
+    holdout = list(range(1_900_000, 1_900_000 + test_episodes))
     if any(seed < 0 or seed >= 8000 for seed in seeds):
         raise ValueError("Training seeds must lie between 0 and 7999 to keep holdout seeds disjoint.")
     runs, raw = [], []
@@ -122,7 +120,7 @@ def benchmark(output, seeds=(11, 22, 33), population=32, generations=24, seconds
         save_policy(champion, output / f"champion-{seed}.json", {"training_seed": seed,
                     "training_seeds": train_seeds, "training_fitness": history[-1]["best_fitness"]})
         with (output / f"training-{seed}.csv").open("w", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=history[0].keys())
+            writer = csv.DictWriter(handle, fieldnames=history[0].keys(), lineterminator="\n")
             writer.writeheader()
             writer.writerows(history)
         policies = {"evolved": champion, "initial_best": initial, "random_brain": None,
@@ -148,7 +146,7 @@ def benchmark(output, seeds=(11, 22, 33), population=32, generations=24, seconds
     champion_paths = [output / f"champion-{seed}.json" for seed in seeds]
     best = max(champion_paths, key=lambda path: json.loads(path.read_text())["metadata"]["training_fitness"])
     (output / "champion.json").write_text(best.read_text())
-    report = {"schema_version": 1, "population": population, "generations": generations,
+    report = {"schema_version": 1, "sensor_encoding": "unit food direction, availability, energy, velocity, position", "population": population, "generations": generations,
               "episode_seconds": seconds, "training_episodes": training_episodes,
               "test_seeds": holdout, "runs": runs, "summary": summary,
               "protocol": "Single-agent foraging, reproduction disabled, 60 respawning food sources; shared held-out layouts; no test-based model selection.",
@@ -158,7 +156,7 @@ def benchmark(output, seeds=(11, 22, 33), population=32, generations=24, seconds
                               "Greedy is a hand-written reference policy, not a learned network."]}
     (output / "report.json").write_text(json.dumps(report, indent=2))
     with (output / "episodes.csv").open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=raw[0].keys())
+        writer = csv.DictWriter(handle, fieldnames=raw[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(raw)
     write_chart(summary, output / "comparison.svg")

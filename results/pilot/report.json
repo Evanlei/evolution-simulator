@@ -1,31 +1,22 @@
 {
   "schema_version": 1,
-  "sensor_encoding": "unit food direction, availability, energy, velocity, position",
   "population": 28,
   "generations": 20,
   "episode_seconds": 25.0,
-  "training_episodes": 6,
+  "training_episodes": 3,
   "test_seeds": [
-    1900000,
-    1900001,
-    1900002,
-    1900003,
-    1900004,
-    1900005,
-    1900006,
-    1900007,
-    1900008,
-    1900009,
-    1900010,
-    1900011,
-    1900012,
-    1900013,
-    1900014,
-    1900015,
-    1900016,
-    1900017,
-    1900018,
-    1900019
+    900000,
+    900001,
+    900002,
+    900003,
+    900004,
+    900005,
+    900006,
+    900007,
+    900008,
+    900009,
+    900010,
+    900011
   ],
   "runs": [
     {
@@ -33,30 +24,27 @@
       "training_seeds": [
         2100,
         2101,
-        2102,
-        2103,
-        2104,
-        2105
+        2102
       ],
       "results": {
         "evolved": {
-          "mean_meals": 39.7,
-          "mean_survival": 25.0000000000004
+          "mean_meals": 2.75,
+          "mean_survival": 24.77500000000039
         },
         "initial_best": {
-          "mean_meals": 9.45,
-          "mean_survival": 25.0000000000004
+          "mean_meals": 0.5833333333333334,
+          "mean_survival": 24.79166666666706
         },
         "random_brain": {
-          "mean_meals": 0.55,
-          "mean_survival": 24.96833333333373
+          "mean_meals": 0.4166666666666667,
+          "mean_survival": 24.59166666666705
         },
         "random_walk": {
-          "mean_meals": 3.65,
-          "mean_survival": 24.470000000000375
+          "mean_meals": 4.5,
+          "mean_survival": 25.0000000000004
         },
         "greedy": {
-          "mean_meals": 46.15,
+          "mean_meals": 44.166666666666664,
           "mean_survival": 25.0000000000004
         }
       }
@@ -66,30 +54,27 @@
       "training_seeds": [
         3200,
         3201,
-        3202,
-        3203,
-        3204,
-        3205
+        3202
       ],
       "results": {
         "evolved": {
-          "mean_meals": 31.55,
-          "mean_survival": 25.0000000000004
+          "mean_meals": 2,
+          "mean_survival": 24.972222222222623
         },
         "initial_best": {
-          "mean_meals": 2.65,
-          "mean_survival": 25.0000000000004
+          "mean_meals": 0.75,
+          "mean_survival": 23.766666666667007
         },
         "random_brain": {
-          "mean_meals": 2.15,
-          "mean_survival": 24.880000000000397
+          "mean_meals": 1,
+          "mean_survival": 24.905555555555953
         },
         "random_walk": {
-          "mean_meals": 3.65,
-          "mean_survival": 24.470000000000375
+          "mean_meals": 4.5,
+          "mean_survival": 25.0000000000004
         },
         "greedy": {
-          "mean_meals": 46.15,
+          "mean_meals": 44.166666666666664,
           "mean_survival": 25.0000000000004
         }
       }
@@ -99,30 +84,27 @@
       "training_seeds": [
         4300,
         4301,
-        4302,
-        4303,
-        4304,
-        4305
+        4302
       ],
       "results": {
         "evolved": {
-          "mean_meals": 39.7,
+          "mean_meals": 3.5833333333333335,
           "mean_survival": 25.0000000000004
         },
         "initial_best": {
-          "mean_meals": 3.65,
-          "mean_survival": 25.0000000000004
+          "mean_meals": 1.3333333333333333,
+          "mean_survival": 24.958333333333734
         },
         "random_brain": {
-          "mean_meals": 0.9,
-          "mean_survival": 24.853333333333726
+          "mean_meals": 0.8333333333333334,
+          "mean_survival": 24.966666666667066
         },
         "random_walk": {
-          "mean_meals": 3.65,
-          "mean_survival": 24.470000000000375
+          "mean_meals": 4.5,
+          "mean_survival": 25.0000000000004
         },
         "greedy": {
-          "mean_meals": 46.15,
+          "mean_meals": 44.166666666666664,
           "mean_survival": 25.0000000000004
         }
       }
@@ -130,23 +112,23 @@
   ],
   "summary": {
     "evolved": {
-      "mean_meals": 36.983333333333334,
-      "sd_across_training_runs": 4.705404693895451
+      "mean_meals": 2.7777777777777777,
+      "sd_across_training_runs": 0.7920320794101807
     },
     "initial_best": {
-      "mean_meals": 5.25,
-      "sd_across_training_runs": 3.6715119501371634
+      "mean_meals": 0.8888888888888888,
+      "sd_across_training_runs": 0.39381796885438397
     },
     "random_brain": {
-      "mean_meals": 1.2,
-      "sd_across_training_runs": 0.8411301920630361
+      "mean_meals": 0.75,
+      "sd_across_training_runs": 0.3004626062886658
     },
     "random_walk": {
-      "mean_meals": 3.65,
+      "mean_meals": 4.5,
       "sd_across_training_runs": 0.0
     },
     "greedy": {
-      "mean_meals": 46.15,
+      "mean_meals": 44.166666666666664,
       "sd_across_training_runs": 0.0
     }
   },
