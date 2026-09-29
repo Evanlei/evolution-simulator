@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420">
+<rect width="900" height="420" fill="#101b26"/>
+<g font-family="sans-serif" fill="#e8eff5">
+<text x="35" y="45" font-size="24">Held-out foraging performance</text>
+<text x="35" y="73" font-size="14" fill="#a7b8c8">Mean meals per episode · same unseen layouts for every policy</text>
+<text x="35" y="127" font-size="15">Evolved neural</text>
+<rect x="215" y="106" width="29.56" height="30" rx="5" fill="#71e0b8"/>
+<text x="259.56" y="127" font-size="15">2.78</text>
+<text x="35" y="179" font-size="15">Best initial neural</text>
+<rect x="215" y="158" width="9.46" height="30" rx="5" fill="#7695bd"/>
+<text x="239.46" y="179" font-size="15">0.89</text>
+<text x="35" y="231" font-size="15">Random neural</text>
+<rect x="215" y="210" width="7.98" height="30" rx="5" fill="#7695bd"/>
+<text x="237.98" y="231" font-size="15">0.75</text>
+<text x="35" y="283" font-size="15">Random walk</text>
+<rect x="215" y="262" width="47.89" height="30" rx="5" fill="#7695bd"/>
+<text x="277.89" y="283" font-size="15">4.50</text>
+<text x="35" y="335" font-size="15">Greedy heuristic</text>
+<rect x="215" y="314" width="470.00" height="30" rx="5" fill="#7695bd"/>
+<text x="700.00" y="335" font-size="15">44.17</text>
+<text x="35" y="395" font-size="12" fill="#a7b8c8">Training fitness includes distance shaping. Evaluation reports actual meals. See report.json for all runs.</text>
+</g></svg>

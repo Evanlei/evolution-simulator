@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "population": 28,
+  "generations": 20,
+  "episode_seconds": 25.0,
+  "training_episodes": 3,
+  "test_seeds": [
+    900000,
+    900001,
+    900002,
+    900003,
+    900004,
+    900005,
+    900006,
+    900007,
+    900008,
+    900009,
+    900010,
+    900011
+  ],
+  "runs": [
+    {
+      "seed": 11,
+      "training_seeds": [
+        2100,
+        2101,
+        2102
+      ],
+      "results": {
+        "evolved": {
+          "mean_meals": 2.75,
+          "mean_survival": 24.77500000000039
+        },
+        "initial_best": {
+          "mean_meals": 0.5833333333333334,
+          "mean_survival": 24.79166666666706
+        },
+        "random_brain": {
+          "mean_meals": 0.4166666666666667,
+          "mean_survival": 24.59166666666705
+        },
+        "random_walk": {
+          "mean_meals": 4.5,
+          "mean_survival": 25.0000000000004
+        },
+        "greedy": {
+          "mean_meals": 44.166666666666664,
+          "mean_survival": 25.0000000000004
+        }
+      }
+    },
+    {
+      "seed": 22,
+      "training_seeds": [
+        3200,
+        3201,
+        3202
+      ],
+      "results": {
+        "evolved": {
+          "mean_meals": 2,
+          "mean_survival": 24.972222222222623
+        },
+        "initial_best": {
+          "mean_meals": 0.75,
+          "mean_survival": 23.766666666667007
+        },
+        "random_brain": {
+          "mean_meals": 1,
+          "mean_survival": 24.905555555555953
+        },
+        "random_walk": {
+          "mean_meals": 4.5,
+          "mean_survival": 25.0000000000004
+        },
+        "greedy": {
+          "mean_meals": 44.166666666666664,
+          "mean_survival": 25.0000000000004
+        }
+      }
+    },
+    {
+      "seed": 33,
+      "training_seeds": [
+        4300,
+        4301,
+        4302
+      ],
+      "results": {
+        "evolved": {
+          "mean_meals": 3.5833333333333335,
+          "mean_survival": 25.0000000000004
+        },
+        "initial_best": {
+          "mean_meals": 1.3333333333333333,
+          "mean_survival": 24.958333333333734
+        },
+        "random_brain": {
+          "mean_meals": 0.8333333333333334,
+          "mean_survival": 24.966666666667066
+        },
+        "random_walk": {
+          "mean_meals": 4.5,
+          "mean_survival": 25.0000000000004
+        },
+        "greedy": {
+          "mean_meals": 44.166666666666664,
+          "mean_survival": 25.0000000000004
+        }
+      }
+    }
+  ],
+  "summary": {
+    "evolved": {
+      "mean_meals": 2.7777777777777777,
+      "sd_across_training_runs": 0.7920320794101807
+    },
+    "initial_best": {
+      "mean_meals": 0.8888888888888888,
+      "sd_across_training_runs": 0.39381796885438397
+    },
+    "random_brain": {
+      "mean_meals": 0.75,
+      "sd_across_training_runs": 0.3004626062886658
+    },
+    "random_walk": {
+      "mean_meals": 4.5,
+      "sd_across_training_runs": 0.0
+    },
+    "greedy": {
+      "mean_meals": 44.166666666666664,
+      "sd_across_training_runs": 0.0
+    }
+  },
+  "protocol": "Single-agent foraging, reproduction disabled, 60 respawning food sources; shared held-out layouts; no test-based model selection.",
+  "fitness": "30 * meals + signed approach progress / 40 + survival_seconds * 0.02",
+  "limitations": [
+    "Foraging benchmark is not proof of stable multi-agent ecology.",
+    "Few training replicates; results are descriptive, not a significance claim.",
+    "Greedy is a hand-written reference policy, not a learned network."
+  ]
+}
