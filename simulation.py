@@ -17,6 +17,8 @@ class World:
     def __init__(self, config=None, seed=42, brain=None, controller="neural", record=True):
         self.config = config or Config()
         self.seed = seed
+        self.founder_brain = brain.copy() if brain else None
+        self.controller = controller
         # Food layouts do not depend on random numbers consumed by neural initialization.
         self.environment_rng = random.Random(seed)
         self.rng = random.Random(seed + 1_000_003)
@@ -104,7 +106,9 @@ class World:
                 "food": self.food.positions, "creatures": [a.to_dict() for a in self.creatures],
                 "rng": self.rng.getstate(), "environment_rng": self.environment_rng.getstate(),
                 "policy_rng": self.policy_rng.getstate(), "history": self.history,
-                "champion": self.champion, "record": self.record}
+                "champion": self.champion, "record": self.record,
+                "founder_brain": self.founder_brain.parameters if self.founder_brain else None,
+                "controller": self.controller}
 
     def save(self, path):
         path = Path(path)
@@ -118,7 +122,9 @@ class World:
         data = json.loads(Path(path).read_text())
         if data.get("schema_version") != SCHEMA_VERSION:
             raise ValueError("Unsupported checkpoint version")
-        world = cls(Config(**data["config"]), data["seed"], record=data["record"])
+        founder = Brain(parameters=data["founder_brain"]) if data.get("founder_brain") else None
+        world = cls(Config(**data["config"]), data["seed"], founder,
+                    data.get("controller", "neural"), record=data["record"])
         for key in ("steps", "births", "deaths", "meals", "max_generation", "next_id", "history", "champion"):
             setattr(world, key, data[key])
         world.creatures = [Creature.from_dict(a) for a in data["creatures"]]

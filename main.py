@@ -2,35 +2,12 @@
 
 import argparse
 import json
+import math
 from pathlib import Path
 
-from brain import Brain
 from config import Config
+from experiments import load_policy
 from simulation import World
-
-
-def basic_view(world):
-    import pygame
-    pygame.init()
-    screen = pygame.display.set_mode((world.config.width, world.config.height))
-    clock = pygame.time.Clock()
-    accumulator, running = 0.0, True
-    while running:
-        accumulator += min(clock.tick(60) / 1000, 0.25)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        while accumulator >= world.config.dt:
-            world.step()
-            accumulator -= world.config.dt
-        screen.fill((13, 22, 30))
-        for x, y in world.food.positions:
-            pygame.draw.circle(screen, (236, 187, 96), (round(x), round(y)), 4)
-        for agent in world.creatures:
-            pygame.draw.circle(screen, (100, 215, 176), (round(agent.x), round(agent.y)), 7)
-        pygame.display.set_caption(f"Evolution Simulator | {len(world.creatures)} creatures | {world.births} births")
-        pygame.display.flip()
-    pygame.quit()
 
 
 def main(argv=None):
@@ -43,14 +20,19 @@ def main(argv=None):
     parser.add_argument("--load", type=Path, help="Resume a world checkpoint")
     parser.add_argument("--brain", type=Path, help="Initialize founders with an exported neural policy")
     parser.add_argument("--output", type=Path, default=Path("runs/latest"))
+    parser.add_argument("--frames", type=int, help="Close the dashboard after this many rendered frames")
+    parser.add_argument("--screenshot", type=Path, help="Save the dashboard on exit")
     args = parser.parse_args(argv)
     try:
-        if args.seconds <= 0:
-            raise ValueError("Seconds must be positive.")
+        if args.seconds <= 0 or not math.isfinite(args.seconds):
+            raise ValueError("Seconds must be positive and finite.")
+        if args.frames is not None and args.frames < 1:
+            raise ValueError("Frames must be positive.")
+        if args.load and args.brain:
+            raise ValueError("Choose either a checkpoint or a founder policy, not both.")
         brain = None
         if args.brain:
-            policy = json.loads(args.brain.read_text())
-            brain = Brain(parameters=policy["parameters"])
+            brain = load_policy(args.brain)
         world = World.load(args.load) if args.load else World(
             Config(initial_population=args.population, food_count=args.food), args.seed, brain)
         if args.headless:
@@ -60,7 +42,8 @@ def main(argv=None):
             world.save(args.output / "world.json")
             print(json.dumps(world.metrics(), indent=2))
         else:
-            basic_view(world)
+            from dashboard import run
+            run(world, args.output, brain, args.frames, args.screenshot)
     except (ValueError, OSError, KeyError, TypeError) as error:
         parser.error(str(error))
 
